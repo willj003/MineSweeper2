@@ -10,13 +10,15 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "WillsMineSweeper", wxPoint(30, 30),
 
 	nField = new int[nFieldWidth * NFieldHeight];
 
+	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+
 	for (int x = 0; x < nFieldWidth; x++)
 	{
 		for (int y = 0; y < NFieldHeight; y++)
 		{
 			btn[y * nFieldWidth + x] = new wxButton(this, 10000 + (y * nFieldWidth + x));
+			btn[y * nFieldWidth + x]->SetFont(font);
 			grid->Add(btn[y * nFieldWidth + x], 1, wxEXPAND | wxALL);
-
 			btn[y * nFieldWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
 			nField[y * nFieldWidth + x] = 0;
 
@@ -70,8 +72,8 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	else
 	{
 		int mine_count = 0;
-		for (size_t i = -1; i < 2; i++)
-			for (size_t j = -1; j < 2; j++)
+		for (int i = -1; i < 2; i++)
+			for (int j = -1; j < 2; j++)
 			{
 				if (x + i >= 0 && x + i < nFieldWidth && y + j >= 0 && y + j < NFieldHeight)
 				{
